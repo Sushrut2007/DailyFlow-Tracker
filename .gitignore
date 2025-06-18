@@ -1,0 +1,41 @@
+# 💡 PYTHON FILES
+__pycache__/
+*.py[cod]
+*.so
+
+# 💡 JUPYTER NOTEBOOK CHECKPOINTS
+.ipynb_checkpoints/
+
+# 💡 LOGS / DATA
+*.log
+*.csv
+
+# 💡 IMAGES (Optional: for output plots)
+*.png
+*.jpg
+
+# 💡 VIRTUAL ENVIRONMENT (if used)
+venv/
+.env/
+env/
+ENV/
+
+# 💡 ENVIRONMENT VARIABLES
+.env
+.env.local
+.env.*.local
+
+# 💡 IDE FILES
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 💡 DISTRIBUTION / PACKAGING
+build/
+dist/
+*.egg-info/
+
+# 💡 OS-SPECIFIC FILES
+.DS_Store
+Thumbs.db
