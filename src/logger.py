@@ -45,12 +45,12 @@ def log_activity(activity_name, start_time, end_time, type):
             
             row.to_csv(file_path, index=False)
         else:
-            row.to_csv(file_path, mode = 'a', index=False, header = False)   
+            row.to_csv(file_path, mode = 'a', index=False, header = False)  # only includes the values of row
             
     except Exception as e:
         print(f"File related issue {e} ")
 
 
 # eg calling in main.py
-# log_activity('eat', '10:30', '10:45', 'break')  
+log_activity('eat', '10:30', '10:45', 'break')  
    
