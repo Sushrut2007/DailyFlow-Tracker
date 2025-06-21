@@ -10,20 +10,21 @@ import pandas as pd
 """
 def log_activity(activity_name, start_time, end_time, type):
     
+    # obtain today's date to store 
+    try: 
+        current_date = datetime.date.today()
+    except Exception as e:
+        print(f"Error getting current date! Using next date of previous entry instead! ")
+        
     # create a dataframe row 
     row = pd.DataFrame({
+        'date' : [current_date],
         'activity_name' : [activity_name], 
         'start_time' : [start_time],
         'end_time' : [end_time],
         'type' : [type]
     })
     
-    # obtain today's date to store 
-    try: 
-        current_date = datetime.date.today()
-    except Exception as e:
-        print(f"Error getting current date! Using next date of previous entry instead! ")
-
     
     # create / open file 
     try :
