@@ -35,9 +35,17 @@ def total_time_per_task():
     df['total_time'] = (df['end_time'] - df['start_time']).dt.total_seconds() / 60
     
     # groupby task and calculate real total time
-    temp = df.groupby('activity_name')['total_time'].sum()
-    return temp
+    tasks = df.groupby('activity_name')['total_time'].sum()
+    return tasks
 
-# temp = total_time_per_task()
+#  tasks = total_time_per_task()
+
+
+# total number of times  a task was done in a day
+def task_counts():
+    task_count = df['activity_name'].value_counts()
+    return task_count
+
+# print(task_counts())
 
 
