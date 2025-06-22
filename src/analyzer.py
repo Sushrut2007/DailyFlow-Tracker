@@ -15,37 +15,66 @@ def read_data():
         print("File/data does not exists! Please add some data and try again.")
         return None
     
-    return df
+    # obtain current date for further daily insights
+    today = pd.Timestamp(datetime.date.today())
+    
+    # create only TODAY's dataframe
+    today_df = df[df['date'] == today]
+    
+    return df, today, today_df
 
-df = read_data()    
+df, today, today_df  = read_data()    
+
 print(df.head())
 #---------------------------------
 
 # convert start and end time to proper datatypes (date time)
 def convert_times():
-    convert = lambda x : pd.to_datetime(df['date'].astype(str) + ' ' + df[x].astype(str))
+    convert = lambda x : pd.to_datetime(today_df['date'].astype(str) + ' ' + today_df[x].astype(str))
 
-    df['start_time'] =  convert('start_time')
-    df['end_time'] =  convert('end_time')
+    today_df['start_time'] =  convert('start_time')
+    today_df['end_time'] =  convert('end_time')
 
 convert_times()
 
 # total time per task
 def total_time_per_task():
-    df['total_time'] = (df['end_time'] - df['start_time']).dt.total_seconds() / 60
+    if today_df.shape[0] == 0:
+        return "No activities for today were inserted !"
+    
+    today_df['total_time'] = (today_df['end_time'] - today_df['start_time']).dt.total_seconds() / 60
     
     # groupby task and calculate real total time
-    tasks = df.groupby('activity_name')['total_time'].sum()
+    tasks = today_df.groupby('activity_name')['total_time'].sum()
     return tasks
 
-#  tasks = total_time_per_task()
+tasks = total_time_per_task()
 
 
 # total number of times  a task was done in a day
 def task_counts():
-    task_count = df['activity_name'].value_counts()
+    if today_df.shape[0] == 0:
+        return "No activities for today were inserted !"
+    
+    task_count = today_df['activity_name'].value_counts()
     return task_count
 
-# print(task_counts())
+print(task_counts())
+
+
+# group the activities by the tags (break / focus) for that day
+def group_by_tags():
+    if today_df.shape[0] == 0:
+        return "No activities for today were inserted !"
+    
+    tasks_by_tags = today_df.groupby('type').agg(
+        {
+            'activity_name' : 'count', # how many unique activities were done
+            'total_time' : 'sum', # absolute total time spent overall
+        }
+    )
+    return tasks_by_tags
+
+# print(group_by_tags())
 
 
