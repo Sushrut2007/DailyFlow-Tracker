@@ -41,7 +41,7 @@ def total_time_per_task():
 #  tasks = total_time_per_task()
 
 
-# total times a task was done in a day
+# total number of times  a task was done in a day
 def task_counts():
     task_count = df['activity_name'].value_counts()
     return task_count
