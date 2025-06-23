@@ -19,13 +19,13 @@ def read_data():
     today = pd.Timestamp(datetime.date.today())
     
     # create only TODAY's dataframe
-    today_df = df[df['date'] == today]
+    today_df = df[df['date'] == today].copy()
     
     return df, today, today_df
 
 df, today, today_df  = read_data()    
 
-print(df.head())
+print(today_df.head())
 #---------------------------------
 
 # convert start and end time to proper datatypes (date time)
@@ -39,6 +39,8 @@ convert_times()
 
 # total time per task
 def total_time_per_task():
+    global today_df
+    
     if today_df.shape[0] == 0:
         return "No activities for today were inserted !"
     
@@ -78,3 +80,10 @@ def group_by_tags():
 # print(group_by_tags())
 
 
+# top 3 tasks by total time taken
+def top_three_tasks():
+    return today_df.sort_values(by = 'total_time', ascending=False)[['activity_name', 'total_time']].head(3)
+
+
+#print("Top 3 tasks")
+#print(top_three_tasks())
