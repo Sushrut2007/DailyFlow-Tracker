@@ -87,3 +87,22 @@ def top_three_tasks():
 
 #print("Top 3 tasks")
 #print(top_three_tasks())
+
+
+# find the most active hour 
+def most_active_hour():
+    today_df['hour'] = today_df['start_time'].dt.hour
+
+    hour_summary = today_df.groupby('hour')['total_time'].sum()
+    
+    # find the most active hour
+    most_active = hour_summary.idxmax() # find the max hour (index value)
+    max_time = hour_summary.max() 
+    
+    return most_active, max_time
+
+# print("hour summary")
+# most_active, max_time = most_active_hour()
+
+# print(most_active)
+# print(max_time)
