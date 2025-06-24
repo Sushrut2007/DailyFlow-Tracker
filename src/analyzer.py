@@ -99,10 +99,12 @@ def most_active_hour():
     most_active = hour_summary.idxmax() # find the max hour (index value)
     max_time = hour_summary.max() 
     
-    return most_active, max_time
+    return most_active, max_time, hour_summary
 
-# print("hour summary")
-# most_active, max_time = most_active_hour()
+print("hour summary")
+most_active, max_time, hour_summary = most_active_hour()
 
 # print(most_active)
 # print(max_time)
+
+print(hour_summary)
