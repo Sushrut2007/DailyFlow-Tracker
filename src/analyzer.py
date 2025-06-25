@@ -17,25 +17,27 @@ def read_data():
     
     # obtain current date for further daily insights
     today = pd.Timestamp(datetime.date.today())
-    
+    global today_df
     # create only TODAY's dataframe
     today_df = df[df['date'] == today].copy()
     
-    return df, today, today_df
+    return df, today_df
 
-df, today, today_df  = read_data()    
-
-print(today_df.head())
 #---------------------------------
 
 # convert start and end time to proper datatypes (date time)
 def convert_times():
+    # call the read_data() function
+    df, today_df = read_data()
+    
     convert = lambda x : pd.to_datetime(today_df['date'].astype(str) + ' ' + today_df[x].astype(str))
 
     today_df['start_time'] =  convert('start_time')
     today_df['end_time'] =  convert('end_time')
 
-convert_times()
+    # total_time column
+    today_df['total_time'] = (today_df['end_time'] - today_df['start_time']).dt.total_seconds() / 60
+    return today_df
 
 # total time per task
 def total_time_per_task():
@@ -44,13 +46,11 @@ def total_time_per_task():
     if today_df.shape[0] == 0:
         return "No activities for today were inserted !"
     
-    today_df['total_time'] = (today_df['end_time'] - today_df['start_time']).dt.total_seconds() / 60
     
     # groupby task and calculate real total time
     tasks = today_df.groupby('activity_name')['total_time'].sum()
     return tasks
 
-tasks = total_time_per_task()
 
 
 # total number of times  a task was done in a day
@@ -61,7 +61,6 @@ def task_counts():
     task_count = today_df['activity_name'].value_counts()
     return task_count
 
-print(task_counts())
 
 
 # group the activities by the tags (break / focus) for that day
@@ -75,18 +74,15 @@ def group_by_tags():
             'total_time' : 'sum', # absolute total time spent overall
         }
     )
-    return tasks_by_tags
-
-# print(group_by_tags())
+    # rename the activity name column, because it will contain count of unique tasks, not names
+    renamed_tags = tasks_by_tags.rename(columns = {'activity_name' : 'activity_count'})
+    return renamed_tags
 
 
 # top 3 tasks by total time taken
 def top_three_tasks():
     return today_df.sort_values(by = 'total_time', ascending=False)[['activity_name', 'total_time']].head(3)
 
-
-#print("Top 3 tasks")
-#print(top_three_tasks())
 
 
 # find the most active hour 
@@ -101,10 +97,3 @@ def most_active_hour():
     
     return most_active, max_time, hour_summary
 
-print("hour summary")
-most_active, max_time, hour_summary = most_active_hour()
-
-# print(most_active)
-# print(max_time)
-
-print(hour_summary)

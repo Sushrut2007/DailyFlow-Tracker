@@ -53,5 +53,5 @@ def log_activity(activity_name, start_time, end_time, type):
 
 
 # eg calling in main.py
-log_activity('eat', '10:30', '10:45', 'break')  
+ 
    
