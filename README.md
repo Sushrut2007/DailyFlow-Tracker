@@ -85,3 +85,7 @@ Python • Pandas • Matplotlib • Seaborn
 ---
 
 **Start tracking your productivity today! ⭐**
+
+**********************************************
+### Note : If You have any trouble setting up the folder structure, 
+## please feel free to create an issue!
