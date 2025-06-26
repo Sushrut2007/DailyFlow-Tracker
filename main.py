@@ -48,15 +48,15 @@ def main():
         today_df = analyzer.convert_times()
         
         sleep(2)
-        print("=" * 60)
+        print('\n'+"=" * 60)
         
         
         activities = [' 1. Log Your Day ', ' 2. Total Time Spent Per Task', ' 3. Task frequency counts ', ' 4. Focus vs Break time breakdown ', ' 5. Top 3 most time-consuming tasks', ' 6. Most active hour identification', ' 7. Bar charts for task time distribution ', ' 8. Pie charts for focus/break analysis',' 9. Hourly activity patterns' ]
-        
+        print('')
         for i in activities : # print the available services
             print(f"{i}", end = " ")
             
-        choice = int(input("\nEnter Your choice : ")) # get user choice
+        choice = int(input("\n\nEnter Your choice : ")) # get user choice
         
         if choice not in list(range(1, 10)):
             print("Invalid Input! Please try again!")
